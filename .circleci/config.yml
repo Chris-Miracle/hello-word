@@ -50,10 +50,14 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - print_pipeline_id
       - run:
           name: "Print my env"
           command: echo $my_name
+  my_job:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - print_pipeline_id
 
 
 workflows:
@@ -67,4 +71,5 @@ workflows:
       - print_world:
           requires: [print_hello]
       - print_my_env
+      - my_job
 
