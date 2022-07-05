@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run:
           name: "Send a text to a file"
-          command: echo "Hello world" > output.txt
+          command: echo "Hello world" > ~/output.txt
       - persist_to_workspace:
           root: ~/
           paths:
