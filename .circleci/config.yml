@@ -54,6 +54,15 @@ jobs:
       - run:
           name: "Print my env"
           command: echo $my_name
+  my_job:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: exit 1
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
 
 
 workflows:
@@ -67,4 +76,5 @@ workflows:
       - print_world:
           requires: [print_hello]
       - print_my_env
+      - my_job
 
