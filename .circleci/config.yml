@@ -4,14 +4,25 @@ version: 2.1
 
 # Define a job to be invoked later in a workflow.
 jobs:
-  say-hello:
+  save_hello_world_output:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Send a text to a file"
+          command: echo "Hello world" > output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
   print_hello:
     docker:
       - image: circleci/node:13.8.0
@@ -41,7 +52,10 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - save_hello_world_output
+      - print_output_file:
+          requires:
+            - save_hello_world_output
       - print_hello
       - print_world:
           requires: [print_hello]
