@@ -2,6 +2,12 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+command:
+  print_pipeline_id:
+    description: "Echo the Command ID"
+    steps:
+      - run: echo $CIRCLE_WORKFLOW_ID
+
 # Define a job to be invoked later in a workflow.
 jobs:
   save_hello_world_output:
@@ -44,6 +50,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - print_pipeline_id
       - run:
           name: "Print my env"
           command: echo $my_name
