@@ -76,7 +76,7 @@ workflows:
   myWorkflow:
     jobs:
       - create_infrastructure
-      - smoke_test
+      - smoke_test:
           requires:
             - create_infrastructure
       # - myjob2
